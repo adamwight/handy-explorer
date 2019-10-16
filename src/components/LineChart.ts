@@ -1,33 +1,16 @@
-import Vue from 'vue';
-import {Component, Mixins} from 'vue-property-decorator';
+import { Component, Mixins, Prop } from 'vue-property-decorator';
 import { Line, mixins } from 'vue-chartjs';
 
 
 @Component({
     extends: Line,
+    mixins: [ mixins.reactiveProp ],
+    props: [ 'chartData', 'options' ],
 })
 export default class LineChart extends Mixins(Line) {
+    @Prop() private chartData!: object;
+    @Prop() private options!: object;
     private mounted() {
-        this.renderChart(
-            {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                    datasets: [
-                    {
-                        label: 'Data One',
-                        backgroundColor: '#FC2525',
-                        data: [40, 39, 10, 40, 39, 80, 40],
-                    },
-                    {
-                        label: 'Data Two',
-                        backgroundColor: '#05CBE1',
-                        data: [60, 55, 32, 10, 2, 12, 53],
-                    },
-                ],
-            },
-            {
-                responsive: true,
-                maintainAspectRatio: false,
-            },
-        );
+        this.renderChart(this.chartData, this.options);
     }
 }
