@@ -7,11 +7,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import LineChart from '@/components/LineChart.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    HelloWorld,
+    LineChart,
   },
 })
 export default class Home extends Vue {}
