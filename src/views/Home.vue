@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <ParameterControls @param1Change="handleParam1" />
+    <ParameterControls @update:param1="handleParam1" />
     <LineChart :chart-data="chartData" :options="chartoptions" />
   </div>
 </template>

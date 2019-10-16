@@ -1,22 +1,17 @@
 <template>
-   <vue-slider :value="value" @change="emitChange" />
+   <vue-slider v-model="syncedParam1" />
 </template>
 
 <script lang="ts">
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/material.css';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, PropSync, Vue } from 'vue-property-decorator';
 
 @Component({
     components: { VueSlider },
 })
 export default class ParameterControls extends Vue {
-    @Prop() private value!: number;
-
-    private emitChange(value: number) {
-        // TODO: debounce: drop if same, only update every e.g. 0.1s
-        this.$emit('param1Change', value);
-    }
+    @PropSync('param1') private syncedParam1!: number;
 }
 </script>
 
