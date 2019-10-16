@@ -1,10 +1,24 @@
 export class HandySimulator {
     private birthRateCommoners: number;
     private birthRateElites: number;
-    constructor(birthRateCommoners: number, birthRateElites: number) {
+    private regenerationFactor: number = 0;
+    private natureCapacity: number = 0;
+    private depletionPerWorker: number = 0;
+    constructor(
+        birthRateCommoners: number,
+        birthRateElites: number,
+        regenerationFactor: number,
+        natureCapacity: number,
+        depletionPerWorker: number
+    ) {
         this.birthRateCommoners = birthRateCommoners;
         this.birthRateElites = birthRateElites;
+        this.regenerationFactor = regenerationFactor;
+        this.natureCapacity = natureCapacity;
+        this.depletionPerWorker = depletionPerWorker;
     }
+
+    // TODO: type for parametric deltas and type for snapshot of parameters
 
     public runSimulation(): object {
         // TODO: decouple return format from chart.js
