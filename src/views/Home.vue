@@ -1,13 +1,15 @@
 <template>
   <div class="home">
-    <ParameterControls />
-    <LineChart :chart-data="displaydatacollection" :options="chartoptions" @param1Change="handleParam1" />
+    <ParameterControls @param1Change="handleParam1" />
+    <LineChart :chart-data="displaydatacollection" :options="chartoptions" />
   </div>
 </template>
 <script lang="ts">
 import LineChart from '../components/LineChart';
 import ParameterControls from '../components/ParameterControls.vue';
-export default {
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component({
     components: {LineChart, ParameterControls},
     computed: {
         displaydatacollection() {
@@ -35,10 +37,13 @@ export default {
             };
         },
     },
-    methods: {
-        handleParam1(value: number) {
-            console.log('foo', value);
-        },
-    },
+})
+export default class Home extends Vue {
+    private param1: number = 0;
+
+    handleParam1(value: number) {
+        console.log(value);
+        this.param1 = value;
+    }
 };
 </script>
