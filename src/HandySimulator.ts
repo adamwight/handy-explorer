@@ -1,7 +1,9 @@
 export class HandySimulator {
-    private param1: number;
-    constructor(param1: number) {
-        this.param1 = param1;
+    private birthRateCommoners: number;
+    private birthRateElites: number;
+    constructor(birthRateCommoners: number, birthRateElites: number) {
+        this.birthRateCommoners = birthRateCommoners;
+        this.birthRateElites = birthRateElites;
     }
 
     public runSimulation(): object {
@@ -11,7 +13,7 @@ export class HandySimulator {
             datasets: [
                 {
                     label: 'Data One',
-                    data: [40, 39, 10, 40, 39, 80, 40].map((val) => val + this.param1),
+                    data: [40, 39, 10, 40, 39, 80, 40].map((val) => val + this.birthRateCommoners - this.birthRateElites),
                 },
                 {
                     label: 'Data Two',

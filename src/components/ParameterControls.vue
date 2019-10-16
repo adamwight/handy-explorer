@@ -1,5 +1,13 @@
 <template>
-   <vue-slider v-model="syncedParam1" />
+    <div>
+        <vue-slider v-model="syncedBirthRateCommoners">
+            <p>Commoners birth rate</p>
+        </vue-slider>
+        <br />
+        <vue-slider v-model="syncedBirthRateElites">
+            <p>Elites birth rate</p>
+        </vue-slider>
+    </div>
 </template>
 
 <script lang="ts">
@@ -11,7 +19,8 @@ import { Component, PropSync, Vue } from 'vue-property-decorator';
     components: { VueSlider },
 })
 export default class ParameterControls extends Vue {
-    @PropSync('param1') private syncedParam1!: number;
+    @PropSync('birthRateCommoners') private syncedBirthRateCommoners!: number;
+    @PropSync('birthRateElites') private syncedBirthRateElites!: number;
 }
 </script>
 

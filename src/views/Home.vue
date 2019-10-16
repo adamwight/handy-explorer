@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <ParameterControls @update:param1="handleParam1" />
+    <ParameterControls
+        @update:birthRateCommoners="handleBirthRateCommoners"
+        @update:birthRateElites="handleBirthRateElites"
+    />
+    <br />
     <LineChart :chart-data="chartData" :options="chartOptions" />
   </div>
 </template>
@@ -8,9 +12,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import LineChart from '../components/LineChart';
-import ParameterControls from '../components/ParameterControls.vue';
-import { HandySimulator } from '../HandySimulator';
+import LineChart from '@/components/LineChart';
+import ParameterControls from '@/components/ParameterControls.vue';
+import { HandySimulator } from '@/HandySimulator';
 
 
 @Component({
@@ -25,15 +29,19 @@ import { HandySimulator } from '../HandySimulator';
     },
 })
 export default class Home extends Vue {
-    private param1: number = 0;
+    private birthRateCommoners: number = 0;
+    private birthRateElites: number = 0;
 
-    private handleParam1(value: number) {
-        this.param1 = value;
-        // TODO force update?
+    private handleBirthRateCommoners(value: number) {
+        this.birthRateCommoners = value;
+    }
+
+    private handleBirthRateElites(value: number) {
+        this.birthRateElites = value;
     }
 
     get chartData() {
-        return new HandySimulator(this.param1).runSimulation();
+        return new HandySimulator(this.birthRateCommoners, this.birthRateElites).runSimulation();
     }
 }
 </script>
