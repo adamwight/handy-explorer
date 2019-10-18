@@ -64,7 +64,7 @@ export default class Home extends Vue {
             this.birthRateElites,
             this.regenerationFactor,
             this.natureCapacity,
-            this.depletionPerWorker
+            this.depletionPerWorker,
         ).runSimulation();
     }
 }

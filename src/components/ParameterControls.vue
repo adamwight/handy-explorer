@@ -1,22 +1,22 @@
 <template>
     <div class="parameter-controls">
-        <vue-slider v-model="syncedBirthRateCommoners">
+        <vue-slider interval="0.01" max="1" min="0" v-model="syncedBirthRateCommoners">
             <p>Commoners birth rate</p>
         </vue-slider>
         <br />
-        <vue-slider v-model="syncedBirthRateElites">
+        <vue-slider interval="0.01" max="1" min="0" v-model="syncedBirthRateElites">
             <p>Elites birth rate</p>
         </vue-slider>
         <br />
-        <vue-slider v-model="syncedRegenerationFactor">
+        <vue-slider interval="0.01" max="1" min="0" v-model="syncedRegenerationFactor">
             <p>Regeneration factor</p>
         </vue-slider>
         <br />
-        <vue-slider v-model="syncedNatureCapacity">
+        <vue-slider max="100" min="0" v-model="syncedNatureCapacity">
             <p>Nature's capacity</p>
         </vue-slider>
         <br />
-        <vue-slider v-model="syncedDepletionPerWorker">
+        <vue-slider interval="0.01" min="0" max="1" v-model="syncedDepletionPerWorker">
             <p>Depletion per worker</p>
         </vue-slider>
     </div>
@@ -31,11 +31,11 @@ import { Component, PropSync, Vue } from 'vue-property-decorator';
     components: { VueSlider },
 })
 export default class ParameterControls extends Vue {
-    @PropSync('birthRateCommoners') private syncedBirthRateCommoners!: number;
-    @PropSync('birthRateElites') private syncedBirthRateElites!: number;
-    @PropSync('regenerationFactor') private syncedRegenerationFactor!: number;
-    @PropSync('natureCapacity') private syncedNatureCapacity!: number;
-    @PropSync('depletionPerWorker') private syncedDepletionPerWorker!: number;
+    @PropSync('birthRateCommoners') private syncedBirthRateCommoners: number = 0.03;
+    @PropSync('birthRateElites') private syncedBirthRateElites: number = 0.03;
+    @PropSync('regenerationFactor') private syncedRegenerationFactor: number = 0.01;
+    @PropSync('natureCapacity') private syncedNatureCapacity: number = 100.0;
+    @PropSync('depletionPerWorker') private syncedDepletionPerWorker: number = 0.01;
 }
 </script>
 
