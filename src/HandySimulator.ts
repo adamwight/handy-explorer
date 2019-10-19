@@ -1,20 +1,17 @@
 export class HandySimulator {
     private birthRateCommoners: number;
     private birthRateElites: number;
-    private regenerationFactor: number = 0;
-    private natureCapacity: number = 0;
-    private depletionPerWorker: number = 0;
+    private regenerationFactor: number;
+    private depletionPerWorker: number;
     constructor(
         birthRateCommoners: number,
         birthRateElites: number,
         regenerationFactor: number,
-        natureCapacity: number,
         depletionPerWorker: number,
     ) {
         this.birthRateCommoners = birthRateCommoners;
         this.birthRateElites = birthRateElites;
         this.regenerationFactor = regenerationFactor;
-        this.natureCapacity = natureCapacity;
         this.depletionPerWorker = depletionPerWorker;
     }
 
@@ -26,6 +23,7 @@ export class HandySimulator {
         const subsistenceSalaryPerCapita = 0.0005;
         const normalDeathRate = 0.0095;
         const famineDeathRate = 0.07;
+        const natureCapacity = 100.0;
 
         let populationCommoners = 100.0;
         let populationElites = 1.0;
@@ -58,15 +56,20 @@ export class HandySimulator {
                 + populationCommoners * (this.birthRateCommoners - deathRateCommoners);
             populationElites = populationElites
                 + populationElites * (this.birthRateElites - deathRateElites);
-            nature = this.regenerationFactor * nature * (this.natureCapacity - nature)
+            nature = nature
+                + this.regenerationFactor * nature * (natureCapacity - nature)
                 - this.depletionPerWorker * populationCommoners * nature;
-            wealth = this.depletionPerWorker * populationCommoners * nature - commonersConsumption - elitesConsumption;
+            wealth = wealth
+                + this.depletionPerWorker * populationCommoners * nature
+                - commonersConsumption
+                - elitesConsumption;
 
             recordPopulationCommoners.push(populationCommoners);
             recordPopulationElites.push(populationElites);
             recordNature.push(nature);
             recordWealth.push(wealth);
         }
+
         // TODO: decouple return format from chart.js
         return {
             labels: Array.from(Array(300).keys()),
@@ -74,18 +77,34 @@ export class HandySimulator {
                 {
                     label: 'Commoners population',
                     data: recordPopulationCommoners,
+                    borderColor: 'rgb(255,0,0)',
+                    backgroundColor: 'rgb(255,0,0)',
+                    fill: false,
+                    pointRadius: 0,
                 },
                 {
                     label: 'Elites population',
                     data: recordPopulationElites,
+                    borderColor: 'rgb(0,0,255)',
+                    backgroundColor: 'rgb(0,0,255)',
+                    fill: false,
+                    pointRadius: 0,
                 },
                 {
                     label: 'Nature',
                     data: recordNature,
+                    borderColor: 'rgb(0,255,0)',
+                    backgroundColor: 'rgb(0,255,0)',
+                    fill: false,
+                    pointRadius: 0,
                 },
                 {
                     label: 'Wealth',
                     data: recordWealth,
+                    borderColor: 'rgb(255,255,0)',
+                    backgroundColor: 'rgb(255,255,0)',
+                    fill: false,
+                    pointRadius: 0,
                 },
             ],
         };

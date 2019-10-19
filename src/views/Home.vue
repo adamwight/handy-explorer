@@ -4,16 +4,16 @@
         @update:birthRateCommoners="handleBirthRateCommoners"
         @update:birthRateElites="handleBirthRateElites"
         @update:regenerationFactor="handleRegenerationFactor"
-        @update:natureCapacity="handleNatureCapacity"
         @update:depletionPerWorker="handleDepletionPerWorker"
     />
-    <br />
-    <LineChart :chart-data="chartData" :options="chartOptions" />
+    <p>
+        <LineChart :chart-data="chartData" :options="chartOptions" />
+    </p>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 import LineChart from '@/components/LineChart';
 import ParameterControls from '@/components/ParameterControls.vue';
@@ -32,11 +32,10 @@ import { HandySimulator } from '@/HandySimulator';
     },
 })
 export default class Home extends Vue {
-    private birthRateCommoners: number = 0;
-    private birthRateElites: number = 0;
-    private regenerationFactor: number = 0;
-    private natureCapacity: number = 0;
-    private depletionPerWorker: number = 0;
+    private birthRateCommoners: number = 0.03;
+    private birthRateElites: number = 0.03;
+    private regenerationFactor: number = 0.01;
+    private depletionPerWorker: number = 0.01;
 
     private handleBirthRateCommoners(value: number) {
         this.birthRateCommoners = value;
@@ -50,10 +49,6 @@ export default class Home extends Vue {
         this.regenerationFactor = value;
     }
 
-    private handleNatureCapcity(value: number) {
-        this.natureCapacity = value;
-    }
-
     private handleDepletionPerWorker(value: number) {
         this.birthRateElites = value;
     }
@@ -63,7 +58,6 @@ export default class Home extends Vue {
             this.birthRateCommoners,
             this.birthRateElites,
             this.regenerationFactor,
-            this.natureCapacity,
             this.depletionPerWorker,
         ).runSimulation();
     }
