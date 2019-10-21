@@ -1,17 +1,17 @@
 export class HandySimulator {
     private birthRateCommoners: number;
     private birthRateElites: number;
-    private regenerationFactor: number;
     private depletionPerWorker: number;
+    private inequalityFactor: number;
     constructor(
         birthRateCommoners: number,
         birthRateElites: number,
-        regenerationFactor: number,
+        inequalityFactor: number,
         depletionPerWorker: number,
     ) {
         this.birthRateCommoners = birthRateCommoners;
         this.birthRateElites = birthRateElites;
-        this.regenerationFactor = regenerationFactor;
+        this.inequalityFactor = inequalityFactor;
         this.depletionPerWorker = depletionPerWorker;
     }
 
@@ -19,11 +19,11 @@ export class HandySimulator {
 
     public runSimulation(): object {
         const minimumRequiredConsumptionPerCapita = 1.0;
-        const inequalityFactor = 10.0;
         const subsistenceSalaryPerCapita = 0.0005;
         const normalDeathRate = 0.0095;
         const famineDeathRate = 0.07;
         const natureCapacity = 100.0;
+        const regenerationFactor = 0.01;
 
         let populationCommoners = 100.0;
         let populationElites = 1.0;
@@ -35,15 +35,21 @@ export class HandySimulator {
         const recordNature: number[] = [];
         const recordWealth: number[] = [];
 
+        console.log("Begin sim:",
+            nature,
+            regenerationFactor,
+            natureCapacity,
+            populationCommoners);
+
         // TODO: make dt configurable.
         for (let i = 0; i < 300; i++) {
             // Derived variables.
             const wealthThreshold = minimumRequiredConsumptionPerCapita
-                * (populationCommoners + inequalityFactor * populationElites);
+                * (populationCommoners + this.inequalityFactor * populationElites);
             const commonersConsumption = Math.min(1, wealth / wealthThreshold)
                 * subsistenceSalaryPerCapita * populationCommoners;
             const elitesConsumption = Math.min(1, wealth / wealthThreshold)
-                * inequalityFactor * subsistenceSalaryPerCapita * populationElites;
+                * this.inequalityFactor * subsistenceSalaryPerCapita * populationElites;
             const deathRateCommoners = normalDeathRate
                 + Math.max(0, 1 - commonersConsumption / (subsistenceSalaryPerCapita * populationCommoners))
                     * (famineDeathRate - normalDeathRate);
@@ -57,7 +63,7 @@ export class HandySimulator {
             populationElites = populationElites
                 + populationElites * (this.birthRateElites - deathRateElites);
             nature = nature
-                + this.regenerationFactor * nature * (natureCapacity - nature)
+                + regenerationFactor * nature * (natureCapacity - nature)
                 - this.depletionPerWorker * populationCommoners * nature;
             wealth = wealth
                 + this.depletionPerWorker * populationCommoners * nature

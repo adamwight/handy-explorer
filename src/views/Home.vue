@@ -3,7 +3,7 @@
     <ParameterControls
         @update:birthRateCommoners="handleBirthRateCommoners"
         @update:birthRateElites="handleBirthRateElites"
-        @update:regenerationFactor="handleRegenerationFactor"
+        @update:inequalityFactor="handleInequalityFactor"
         @update:depletionPerWorker="handleDepletionPerWorker"
     />
     <p>
@@ -34,7 +34,7 @@ import { HandySimulator } from '@/HandySimulator';
 export default class Home extends Vue {
     private birthRateCommoners: number = 0.03;
     private birthRateElites: number = 0.03;
-    private regenerationFactor: number = 0.01;
+    private inequalityFactor: number = 10;
     private depletionPerWorker: number = 0.01;
 
     private handleBirthRateCommoners(value: number) {
@@ -45,8 +45,8 @@ export default class Home extends Vue {
         this.birthRateElites = value;
     }
 
-    private handleRegenerationFactor(value: number) {
-        this.regenerationFactor = value;
+    private handleInequalityFactor(value: number) {
+        this.inequalityFactor = value;
     }
 
     private handleDepletionPerWorker(value: number) {
@@ -57,7 +57,7 @@ export default class Home extends Vue {
         return new HandySimulator(
             this.birthRateCommoners,
             this.birthRateElites,
-            this.regenerationFactor,
+            this.inequalityFactor,
             this.depletionPerWorker,
         ).runSimulation();
     }
