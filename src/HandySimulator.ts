@@ -40,7 +40,7 @@ export class HandySimulator {
         let maximumNature: number;
         let maximumWealth: number;
 
-        console.log("Begin sim:",
+        console.log('Begin sim:',
             nature,
             regenerationFactor,
             natureCapacity,
@@ -93,11 +93,11 @@ export class HandySimulator {
 
             return [
                 list.map((unscaled: number) => (unscaled - min) / (max - min)),
-                max
+                max,
             ];
         }
         [recordPopulationCommoners, maximumPopulationCommoners] = normalize(recordPopulationCommoners);
-        [recordPopulationElites, maximumPopulationElites]= normalize(recordPopulationElites);
+        [recordPopulationElites, maximumPopulationElites] = normalize(recordPopulationElites);
         [recordNature, maximumNature] = normalize(recordNature);
         [recordWealth, maximumWealth] = normalize(recordWealth);
 

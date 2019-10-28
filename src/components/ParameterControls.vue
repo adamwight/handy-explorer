@@ -13,7 +13,7 @@
             <p>Inequality factor</p>
         </vue-slider>
         <br />
-        <vue-slider :interval="0.0001" :max="1" :min="0" v-model="syncedDepletionPerWorker">
+        <vue-slider :interval="0.0001" :max=".01" :min="0" v-model="syncedDepletionPerWorker">
             <p>Depletion per worker</p>
         </vue-slider>
     </div>
@@ -37,5 +37,7 @@ export default class ParameterControls extends Vue {
 </script>
 
 <style scoped>
-
+div {
+    margin: 10px auto 10px auto;
+}
 </style>
