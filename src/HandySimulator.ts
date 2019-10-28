@@ -18,7 +18,8 @@ export class HandySimulator {
     // TODO: type for parametric deltas and type for snapshot of parameters
 
     public runSimulation(): object {
-        const minimumRequiredConsumptionPerCapita = 1.0;
+        // FIXME: This minimum consumption is a guess taken from another non-author's HANDY implementation.
+        const minimumRequiredConsumptionPerCapita = 0.005;
         const subsistenceSalaryPerCapita = 0.0005;
         const normalDeathRate = 0.0095;
         const famineDeathRate = 0.07;
@@ -30,10 +31,14 @@ export class HandySimulator {
         let nature = 100.0;
         let wealth = 0.0;
 
-        const recordPopulationCommoners: number[] = [];
-        const recordPopulationElites: number[] = [];
-        const recordNature: number[] = [];
-        const recordWealth: number[] = [];
+        let recordPopulationCommoners: number[] = [];
+        let recordPopulationElites: number[] = [];
+        let recordNature: number[] = [];
+        let recordWealth: number[] = [];
+        let maximumPopulationCommoners: number;
+        let maximumPopulationElites: number;
+        let maximumNature: number;
+        let maximumWealth: number;
 
         console.log("Begin sim:",
             nature,
@@ -50,6 +55,7 @@ export class HandySimulator {
                 * subsistenceSalaryPerCapita * populationCommoners;
             const elitesConsumption = Math.min(1, wealth / wealthThreshold)
                 * this.inequalityFactor * subsistenceSalaryPerCapita * populationElites;
+            // TODO: Should show when we hit the logistic section.
             const deathRateCommoners = normalDeathRate
                 + Math.max(0, 1 - commonersConsumption / (subsistenceSalaryPerCapita * populationCommoners))
                     * (famineDeathRate - normalDeathRate);
@@ -57,18 +63,20 @@ export class HandySimulator {
                 + Math.max(0, 1 - elitesConsumption / (subsistenceSalaryPerCapita * populationElites))
                 * (famineDeathRate - normalDeathRate);
 
+            // console.log(wealthThreshold, commonersConsumption, elitesConsumption, deathRateCommoners, deathRateElites);
+
             // Update main variables.
-            populationCommoners = populationCommoners
-                + populationCommoners * (this.birthRateCommoners - deathRateCommoners);
-            populationElites = populationElites
-                + populationElites * (this.birthRateElites - deathRateElites);
-            nature = nature
+            populationCommoners = Math.max(0, populationCommoners
+                + populationCommoners * (this.birthRateCommoners - deathRateCommoners));
+            populationElites = Math.max(0, populationElites
+                + populationElites * (this.birthRateElites - deathRateElites));
+            nature = Math.max(0, nature
                 + regenerationFactor * nature * (natureCapacity - nature)
-                - this.depletionPerWorker * populationCommoners * nature;
-            wealth = wealth
+                - this.depletionPerWorker * populationCommoners * nature);
+            wealth = Math.max(0, wealth
                 + this.depletionPerWorker * populationCommoners * nature
                 - commonersConsumption
-                - elitesConsumption;
+                - elitesConsumption);
 
             recordPopulationCommoners.push(populationCommoners);
             recordPopulationElites.push(populationElites);
@@ -76,12 +84,29 @@ export class HandySimulator {
             recordWealth.push(wealth);
         }
 
+        // TODO: Clean up normalization.  Print scale for each line.
+        function normalize(list: number[]): [number[], number] {
+            const min = list.reduce(
+                (previousValue: number, currentValue: number) => Math.min(previousValue, currentValue));
+            const max = list.reduce(
+                (previousValue: number, currentValue: number) => Math.max(previousValue, currentValue));
+
+            return [
+                list.map((unscaled: number) => (unscaled - min) / (max - min)),
+                max
+            ];
+        }
+        [recordPopulationCommoners, maximumPopulationCommoners] = normalize(recordPopulationCommoners);
+        [recordPopulationElites, maximumPopulationElites]= normalize(recordPopulationElites);
+        [recordNature, maximumNature] = normalize(recordNature);
+        [recordWealth, maximumWealth] = normalize(recordWealth);
+
         // TODO: decouple return format from chart.js
         return {
             labels: Array.from(Array(300).keys()),
             datasets: [
                 {
-                    label: 'Commoners population',
+                    label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',
                     data: recordPopulationCommoners,
                     borderColor: 'rgb(255,0,0)',
                     backgroundColor: 'rgb(255,0,0)',
@@ -89,7 +114,7 @@ export class HandySimulator {
                     pointRadius: 0,
                 },
                 {
-                    label: 'Elites population',
+                    label: 'Elites population (max ' + Math.round(maximumPopulationElites) + ')',
                     data: recordPopulationElites,
                     borderColor: 'rgb(0,0,255)',
                     backgroundColor: 'rgb(0,0,255)',

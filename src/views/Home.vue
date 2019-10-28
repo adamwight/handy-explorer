@@ -25,6 +25,7 @@ import { HandySimulator } from '@/HandySimulator';
     computed: {
         chartOptions() {
             return {
+                animation: false,
                 responsive: true,
                 maintainAspectRatio: false,
             };
@@ -53,6 +54,7 @@ export default class Home extends Vue {
         this.birthRateElites = value;
     }
 
+    // TODO: ease between graphs, but don't flash to zero in-between.
     get chartData() {
         return new HandySimulator(
             this.birthRateCommoners,
