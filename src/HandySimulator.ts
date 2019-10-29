@@ -40,12 +40,6 @@ export class HandySimulator {
         let maximumNature: number;
         let maximumWealth: number;
 
-        console.log('Begin sim:',
-            nature,
-            regenerationFactor,
-            natureCapacity,
-            populationCommoners);
-
         // TODO: make dt configurable.
         for (let i = 0; i < 300; i++) {
             // Derived variables.
@@ -62,8 +56,6 @@ export class HandySimulator {
             const deathRateElites = normalDeathRate
                 + Math.max(0, 1 - elitesConsumption / (subsistenceSalaryPerCapita * populationElites))
                 * (famineDeathRate - normalDeathRate);
-
-            // console.log(wealthThreshold, commonersConsumption, elitesConsumption, deathRateCommoners, deathRateElites);
 
             // Update main variables.
             populationCommoners = Math.max(0, populationCommoners
