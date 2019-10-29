@@ -25,6 +25,7 @@ export class HandySimulator {
         const famineDeathRate = 0.07;
         const natureCapacity = 100.0;
         const regenerationFactor = 0.01;
+        const yearsToModel = 600;
 
         let populationCommoners = 100.0;
         let populationElites = 1.0;
@@ -41,7 +42,7 @@ export class HandySimulator {
         let maximumWealth: number;
 
         // TODO: make dt configurable.
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < yearsToModel; i++) {
             // Derived variables.
             const wealthThreshold = minimumRequiredConsumptionPerCapita
                 * (populationCommoners + this.inequalityFactor * populationElites);
@@ -93,7 +94,7 @@ export class HandySimulator {
 
         // TODO: decouple return format from chart.js
         return {
-            labels: Array.from(Array(300).keys()),
+            labels: Array.from(Array(yearsToModel).keys()),
             datasets: [
                 {
                     label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',
