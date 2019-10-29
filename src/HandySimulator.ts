@@ -78,13 +78,11 @@ export class HandySimulator {
 
         // TODO: Clean up normalization.  Print scale for each line.
         function normalize(list: number[]): [number[], number] {
-            const min = list.reduce(
-                (previousValue: number, currentValue: number) => Math.min(previousValue, currentValue));
             const max = list.reduce(
                 (previousValue: number, currentValue: number) => Math.max(previousValue, currentValue));
 
             return [
-                list.map((unscaled: number) => (unscaled - min) / (max - min)),
+                list.map((unscaled: number) => unscaled / max),
                 max,
             ];
         }
