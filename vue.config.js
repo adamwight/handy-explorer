@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: "."
+    publicPath: "https://adamwight.github.io/handy-explorer/"
 }
