@@ -1,8 +1,8 @@
 export class HandySimulator {
     private birthRateCommoners: number;
     private birthRateElites: number;
-    private depletionPerWorker: number;
     private inequalityFactor: number;
+    private depletionPerWorker: number;
     constructor(
         birthRateCommoners: number,
         birthRateElites: number,
@@ -16,9 +16,11 @@ export class HandySimulator {
     }
 
     // TODO: type for parametric deltas and type for snapshot of parameters
-
     public runSimulation(): object {
-        // FIXME: This minimum consumption is a guess taken from another non-author's HANDY implementation.
+        const startMark = performance.now();
+        // FIXME: This minimum consumption is a guess taken from other non-authors' HANDY
+        // implementations.  But why would it be higher than the subsistence salary?  Are
+        // they on different scales?
         const minimumRequiredConsumptionPerCapita = 0.005;
         const subsistenceSalaryPerCapita = 0.0005;
         const normalDeathRate = 0.0095;
@@ -26,23 +28,26 @@ export class HandySimulator {
         const natureCapacity = 100.0;
         const regenerationFactor = 0.01;
         const yearsToModel = 600;
+        // TODO: const dataPoints = 100;
+        // FIXME: Changing dt makes the model unstable.
+        const dt = 1;
 
-        let populationCommoners = 100.0;
-        let populationElites = 1.0;
-        let nature = 100.0;
-        let wealth = 0.0;
+        let populationCommoners = 100;
+        let populationElites = 1;
+        let nature = 100;
+        let wealth = 0;
 
         let recordPopulationCommoners: number[] = [];
         let recordPopulationElites: number[] = [];
         let recordNature: number[] = [];
         let recordWealth: number[] = [];
+        const recordTime: number[] = [];
         let maximumPopulationCommoners: number;
         let maximumPopulationElites: number;
         let maximumNature: number;
         let maximumWealth: number;
 
-        // TODO: make dt configurable.
-        for (let i = 0; i < yearsToModel; i++) {
+        for (let i = 0; i < yearsToModel; i += dt) {
             // Derived variables.
             const wealthThreshold = minimumRequiredConsumptionPerCapita
                 * (populationCommoners + this.inequalityFactor * populationElites);
@@ -50,7 +55,7 @@ export class HandySimulator {
                 * subsistenceSalaryPerCapita * populationCommoners;
             const elitesConsumption = Math.min(1, wealth / wealthThreshold)
                 * this.inequalityFactor * subsistenceSalaryPerCapita * populationElites;
-            // TODO: Should show when we hit the logistic section.
+            // TODO: Should show periods of famine on the graph.
             const deathRateCommoners = normalDeathRate
                 + Math.max(0, 1 - commonersConsumption / (subsistenceSalaryPerCapita * populationCommoners))
                     * (famineDeathRate - normalDeathRate);
@@ -59,22 +64,27 @@ export class HandySimulator {
                 * (famineDeathRate - normalDeathRate);
 
             // Update main variables.
-            populationCommoners = Math.max(0, populationCommoners
-                + populationCommoners * (this.birthRateCommoners - deathRateCommoners));
-            populationElites = Math.max(0, populationElites
-                + populationElites * (this.birthRateElites - deathRateElites));
-            nature = Math.max(0, nature
-                + regenerationFactor * nature * (natureCapacity - nature)
-                - this.depletionPerWorker * populationCommoners * nature);
-            wealth = Math.max(0, wealth
-                + this.depletionPerWorker * populationCommoners * nature
+            const populationCommonersNext = Math.max(0, populationCommoners + dt * (
+                populationCommoners * (this.birthRateCommoners - deathRateCommoners)));
+            const populationElitesNext = Math.max(0, populationElites + dt * (
+                populationElites * (this.birthRateElites - deathRateElites)));
+            const natureNext = Math.max(0, nature + dt * (
+                regenerationFactor * nature * (natureCapacity - nature)
+                - this.depletionPerWorker * populationCommoners * nature));
+            const wealthNext = Math.max(0, wealth + dt * (
+                this.depletionPerWorker * populationCommoners * nature
                 - commonersConsumption
-                - elitesConsumption);
+                - elitesConsumption));
+            populationCommoners = populationCommonersNext;
+            populationElites = populationElitesNext;
+            nature = natureNext;
+            wealth = wealthNext;
 
             recordPopulationCommoners.push(populationCommoners);
             recordPopulationElites.push(populationElites);
             recordNature.push(nature);
             recordWealth.push(wealth);
+            recordTime.push(Math.round(i));
         }
 
         // TODO: Clean up normalization.  Print scale for each line.
@@ -92,9 +102,13 @@ export class HandySimulator {
         [recordNature, maximumNature] = normalize(recordNature);
         [recordWealth, maximumWealth] = normalize(recordWealth);
 
+        const endMark = performance.now();
+        // console.debug('Simulation ran in', endMark - startMark, 'ms');
+
         // TODO: decouple return format from chart.js
         return {
-            labels: Array.from(Array(yearsToModel).keys()),
+            // TODO: Only needs a handful of labels to give the scale.
+            labels: recordTime,
             datasets: [
                 {
                     label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',

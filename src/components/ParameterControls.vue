@@ -9,11 +9,11 @@
         </vue-slider>
         <br />
         <!-- TODO: slider should be logarithmic. -->
-        <vue-slider :interval="0.1" :max="100" :min="0" v-model="syncedInequalityFactor">
+        <vue-slider :interval="1" :max="100" :min="1" v-model="syncedInequalityFactor">
             <p>Inequality factor</p>
         </vue-slider>
         <br />
-        <vue-slider :interval="0.0001" :max=".01" :min="0" v-model="syncedDepletionPerWorker">
+        <vue-slider :interval="0.000001" :max=".00005" :min="0" v-model="syncedDepletionPerWorker">
             <p>Depletion per worker</p>
         </vue-slider>
     </div>

@@ -35,10 +35,11 @@ import { HandySimulator } from '@/HandySimulator';
     },
 })
 export default class Home extends Vue {
+    // FIXME: defaults are duplicated in ParameterControls.
     private birthRateCommoners: number = 0.03;
     private birthRateElites: number = 0.03;
     private inequalityFactor: number = 10;
-    private depletionPerWorker: number = 0.01;
+    private depletionPerWorker: number = 0.000007;
 
     private handleBirthRateCommoners(value: number) {
         this.birthRateCommoners = value;
@@ -53,7 +54,7 @@ export default class Home extends Vue {
     }
 
     private handleDepletionPerWorker(value: number) {
-        this.birthRateElites = value;
+        this.depletionPerWorker = value;
     }
 
     get chartData() {
