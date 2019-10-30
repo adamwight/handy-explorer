@@ -106,9 +106,7 @@ export class HandySimulator {
         // to speed up rendering.  Ideally we could show a debounce(100ms) outline of the curves while
         // dragging a control, then do a final render on endDrag at full resolution.
         const dataPoints = 300;
-        const skipFilter = function (element: any, index: number) {
-            return (index % (yearsToModel / dataPoints));
-        };
+        const skipFilter = (element: any, index: number) => index % (yearsToModel / dataPoints);
 
         const endMark = performance.now();
         // console.debug('Simulation ran in', endMark - startMark, 'ms');
