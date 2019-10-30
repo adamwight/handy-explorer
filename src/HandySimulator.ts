@@ -102,17 +102,25 @@ export class HandySimulator {
         [recordNature, maximumNature] = normalize(recordNature);
         [recordWealth, maximumWealth] = normalize(recordWealth);
 
+        // TODO: This is a pity, we're about to reduce data points from the oversampled simulation output,
+        // to speed up rendering.  Ideally we could show a debounce(100ms) outline of the curves while
+        // dragging a control, then do a final render on endDrag at full resolution.
+        const dataPoints = 300;
+        const skipFilter = function (element: any, index: number) {
+            return (index % (yearsToModel / dataPoints));
+        };
+
         const endMark = performance.now();
         // console.debug('Simulation ran in', endMark - startMark, 'ms');
 
         // TODO: decouple return format from chart.js
         return {
             // TODO: Only needs a handful of labels to give the scale.
-            labels: recordTime,
+            labels: recordTime.filter(skipFilter),
             datasets: [
                 {
                     label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',
-                    data: recordPopulationCommoners,
+                    data: recordPopulationCommoners.filter(skipFilter),
                     borderColor: 'rgb(255,0,0)',
                     backgroundColor: 'rgb(255,0,0)',
                     fill: false,
@@ -120,7 +128,7 @@ export class HandySimulator {
                 },
                 {
                     label: 'Elites population (max ' + Math.round(maximumPopulationElites) + ')',
-                    data: recordPopulationElites,
+                    data: recordPopulationElites.filter(skipFilter),
                     borderColor: 'rgb(0,0,255)',
                     backgroundColor: 'rgb(0,0,255)',
                     fill: false,
@@ -128,7 +136,7 @@ export class HandySimulator {
                 },
                 {
                     label: 'Nature',
-                    data: recordNature,
+                    data: recordNature.filter(skipFilter),
                     borderColor: 'rgb(0,255,0)',
                     backgroundColor: 'rgb(0,255,0)',
                     fill: false,
@@ -136,7 +144,7 @@ export class HandySimulator {
                 },
                 {
                     label: 'Wealth',
-                    data: recordWealth,
+                    data: recordWealth.filter(skipFilter),
                     borderColor: 'rgb(255,255,0)',
                     backgroundColor: 'rgb(255,255,0)',
                     fill: false,

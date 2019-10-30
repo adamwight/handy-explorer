@@ -9,7 +9,7 @@
         </vue-slider>
         <br />
         <!-- TODO: slider should be logarithmic. -->
-        <vue-slider :interval="1" :max="100" :min="1" v-model="syncedInequalityFactor">
+        <vue-slider :interval="0.25" :max="100" :min="1" v-model="syncedInequalityFactor">
             <p>Inequality factor</p>
         </vue-slider>
         <br />
