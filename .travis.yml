@@ -1,8 +1,12 @@
+addons:
+    sonarcloud:
+        organization: "adamwight-github"
 language: node_js
 node_js:
     - node
 script:
     - npm run build
+    - sonar-scanner -D sonar.login="$SONAR_TOKEN"
 deploy:
     provider: pages
     skip_cleanup: true
