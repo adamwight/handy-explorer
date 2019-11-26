@@ -10,6 +10,10 @@
       <p><b>Elites</b> are people who earn some <b>inequality factor</b> more than the commoners, and do not directly work at extracting resources.</p>
       <p><b>Nature</b> is all of the living things and natural resources of the planet, in aggregate.  It is assumed to regenerate at a slow rate.</p>
       <p><b>Wealth</b> is a store of human productive labor, which can be drawn against in times of need.  When wealth is exhausted, famine occurs.</p>
+
+      <hr />
+
+      <p>Source code: <a href="https://github.com/adamwight/handy-explorer">handy-explorer</a></p>
   </div>
 </template>
 
