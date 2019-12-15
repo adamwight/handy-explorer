@@ -102,6 +102,11 @@ export class HandySimulator {
         [recordNature, maximumNature] = normalize(recordNature);
         [recordWealth, maximumWealth] = normalize(recordWealth);
 
+        // Un-normalize populations relative to one another.  FIXME: Wasteful.
+        const maxPop = Math.max(maximumPopulationCommoners, maximumPopulationElites);
+        recordPopulationElites = recordPopulationElites.map((normalized: number) => normalized * maximumPopulationElites / maxPop);
+        recordPopulationCommoners = recordPopulationCommoners.map((normalized: number) => normalized * maximumPopulationCommoners / maxPop);
+
         // TODO: This is a pity, we're about to reduce data points from the oversampled simulation output,
         // to speed up rendering.  Ideally we could show a debounce(100ms) outline of the curves while
         // dragging a control, then do a final render on endDrag at full resolution.
