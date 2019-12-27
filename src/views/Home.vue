@@ -30,6 +30,14 @@ import { HandySimulator } from '@/HandySimulator';
                 animation: false,
                 responsive: true,
                 maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Years",
+                        },
+                    }],
+                },
             };
         },
     },
