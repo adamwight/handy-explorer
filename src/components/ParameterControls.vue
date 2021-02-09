@@ -20,20 +20,31 @@
 </template>
 
 <script lang="ts">
-import VueSlider from 'vue-slider-component';
-import 'vue-slider-component/theme/material.css';
-import { Component, PropSync, Vue } from 'vue-property-decorator';
+import { defineComponent } from 'vue'
+import 'vue-slider-component/theme/material.css'
 
-@Component({
-    components: { VueSlider },
+export default defineComponent({
+    name: 'ParameterControls',
+    props: {
+        birthRateCommoners: {
+            type: Number,
+            default: 0.03,
+        },
+        birthRateElites: {
+            type: Number,
+            default: 0.03,
+        },
+        inequalityFactor: {
+            type: Number,
+            default: 10
+        },
+        // FIXME: depletion figure is a stolen guess.
+        depletionPerWorker: {
+            type: Number,
+            default: 0.000007
+        },
+    }
 })
-export default class ParameterControls extends Vue {
-    @PropSync('birthRateCommoners', { default: 0.03 }) private syncedBirthRateCommoners!: number;
-    @PropSync('birthRateElites', { default: 0.03 }) private syncedBirthRateElites!: number;
-    @PropSync('inequalityFactor', { default: 10 }) private syncedInequalityFactor!: number;
-    // FIXME: depletion figure is a stolen guess.
-    @PropSync('depletionPerWorker', { default: 0.000007 }) private syncedDepletionPerWorker!: number;
-}
 </script>
 
 <style scoped>

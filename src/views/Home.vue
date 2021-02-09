@@ -15,66 +15,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { defineComponent } from 'vue'
+import { HandySimulator } from '@/HandySimulator'
 
-import LineChart from '@/components/LineChart';
-import ParameterControls from '@/components/ParameterControls.vue';
-import { HandySimulator } from '@/HandySimulator';
-
-
-@Component({
-    components: {LineChart, ParameterControls},
+export default defineComponent({
     computed: {
-        chartOptions() {
-            return {
-                animation: false,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Years",
-                        },
-                    }],
-                },
-            };
-        },
+        chartData() {
+            // TODO: kill running simulation on any changed parameter.
+            return new HandySimulator(
+                this.birthRateCommoners,
+                this.birthRateElites,
+                this.inequalityFactor,
+                this.depletionPerWorker,
+            ).runSimulation();
+        }
     },
 })
-export default class Home extends Vue {
-    // FIXME: defaults are duplicated in ParameterControls.
-    private birthRateCommoners: number = 0.03;
-    private birthRateElites: number = 0.03;
-    private inequalityFactor: number = 10;
-    private depletionPerWorker: number = 0.000007;
-
-    private handleBirthRateCommoners(value: number) {
-        this.birthRateCommoners = value;
-    }
-
-    private handleBirthRateElites(value: number) {
-        this.birthRateElites = value;
-    }
-
-    private handleInequalityFactor(value: number) {
-        this.inequalityFactor = value;
-    }
-
-    private handleDepletionPerWorker(value: number) {
-        this.depletionPerWorker = value;
-    }
-
-    get chartData() {
-        // TODO: kill running simulation on any changed parameter.
-        return new HandySimulator(
-            this.birthRateCommoners,
-            this.birthRateElites,
-            this.inequalityFactor,
-            this.depletionPerWorker,
-        ).runSimulation();
-    }
-}
 </script>
 
 <style scoped>
