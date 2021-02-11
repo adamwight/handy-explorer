@@ -1,22 +1,9 @@
-export class HandySimulator {
-    private birthRateCommoners: number;
-    private birthRateElites: number;
-    private inequalityFactor: number;
-    private depletionPerWorker: number;
-    constructor(
-        birthRateCommoners: number,
-        birthRateElites: number,
-        inequalityFactor: number,
-        depletionPerWorker: number,
-    ) {
-        this.birthRateCommoners = birthRateCommoners;
-        this.birthRateElites = birthRateElites;
-        this.inequalityFactor = inequalityFactor;
-        this.depletionPerWorker = depletionPerWorker;
-    }
+import { SimulationParameters } from "@/store/SimulationParameters";
+
+export default class {
 
     // TODO: type for parametric deltas and type for snapshot of parameters
-    public runSimulation(): object {
+    public runSimulation(params: SimulationParameters): object {
         const startMark = performance.now();
         // FIXME: This minimum consumption is a guess taken from other non-authors' HANDY
         // implementations.  But why would it be higher than the subsistence salary?  Are
@@ -50,11 +37,11 @@ export class HandySimulator {
         for (let i = 0; i < yearsToModel; i += dt) {
             // Derived variables.
             const wealthThreshold = minimumRequiredConsumptionPerCapita
-                * (populationCommoners + this.inequalityFactor * populationElites);
+                * (populationCommoners + params.inequalityFactor * populationElites);
             const commonersConsumption = Math.min(1, wealth / wealthThreshold)
                 * subsistenceSalaryPerCapita * populationCommoners;
             const elitesConsumption = Math.min(1, wealth / wealthThreshold)
-                * this.inequalityFactor * subsistenceSalaryPerCapita * populationElites;
+                * params.inequalityFactor * subsistenceSalaryPerCapita * populationElites;
             // TODO: Should show periods of famine on the graph.
             const deathRateCommoners = normalDeathRate
                 + Math.max(0, 1 - commonersConsumption / (subsistenceSalaryPerCapita * populationCommoners))
@@ -65,14 +52,14 @@ export class HandySimulator {
 
             // Update main variables.
             const populationCommonersNext = Math.max(0, populationCommoners + dt * (
-                populationCommoners * (this.birthRateCommoners - deathRateCommoners)));
+                populationCommoners * (params.birthRateCommoners - deathRateCommoners)));
             const populationElitesNext = Math.max(0, populationElites + dt * (
-                populationElites * (this.birthRateElites - deathRateElites)));
+                populationElites * (params.birthRateElites - deathRateElites)));
             const natureNext = Math.max(0, nature + dt * (
                 regenerationFactor * nature * (natureCapacity - nature)
-                - this.depletionPerWorker * populationCommoners * nature));
+                - params.depletionPerWorker * populationCommoners * nature));
             const wealthNext = Math.max(0, wealth + dt * (
-                this.depletionPerWorker * populationCommoners * nature
+                params.depletionPerWorker * populationCommoners * nature
                 - commonersConsumption
                 - elitesConsumption));
             populationCommoners = populationCommonersNext;

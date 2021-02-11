@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <svg id="chart"
-            :height="height"
-            :width="width"
-        >
-        </svg>
-    </div>
+  <div>
+    <svg
+      id="chart"
+      :height="height"
+      :width="width"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,16 +25,16 @@ export default defineComponent({
     created() {
         const svg = d3
             .select("#chart")
-            .append("g")
+            .append("g");
 
         const xAxis = d3
-            .scaleLinear()
-            .domain([0,)
-            .range(this.width)
-        const y =
-        this.chart = d3
-            .
-    }
+            .scaleLinear();
+        // TODO
+            //.domain([0,)
+            //.range(this.width)
+        //const yAxis =
+        //this.chart = d3
+    },
 })
         //this.renderChart(this.chartData, this.options);
 </script>
