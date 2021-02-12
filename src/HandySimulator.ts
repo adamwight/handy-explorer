@@ -5,22 +5,12 @@ export default class {
     // TODO: type for parametric deltas and type for snapshot of parameters
     public runSimulation(params: SimulationParameters): object {
         const startMark = performance.now();
-        // FIXME: This minimum consumption is a guess taken from other non-authors' HANDY
-        // implementations.  But why would it be higher than the subsistence salary?  Are
-        // they on different scales?
-        const minimumRequiredConsumptionPerCapita = 0.005;
-        const subsistenceSalaryPerCapita = 0.0005;
-        const normalDeathRate = 0.0095;
-        const famineDeathRate = 0.07;
-        const natureCapacity = 100.0;
-        const regenerationFactor = 0.01;
-        const yearsToModel = 600;
         // TODO: const dataPoints = 100;
         // FIXME: Changing dt makes the model unstable.
         const dt = 1;
 
-        let populationCommoners = 100;
-        let populationElites = 1;
+        let populationCommoners = params.initialPopulationCommoners;
+        let populationElites = params.initialPopulationElites;
         let nature = 100;
         let wealth = 0;
 
@@ -34,21 +24,21 @@ export default class {
         let maximumNature: number;
         let maximumWealth: number;
 
-        for (let i = 0; i < yearsToModel; i += dt) {
+        for (let i = 0; i < params.yearsToModel; i += dt) {
             // Derived variables.
-            const wealthThreshold = minimumRequiredConsumptionPerCapita
+            const wealthThreshold = params.minimumRequiredConsumptionPerCapita
                 * (populationCommoners + params.inequalityFactor * populationElites);
             const commonersConsumption = Math.min(1, wealth / wealthThreshold)
-                * subsistenceSalaryPerCapita * populationCommoners;
+                * params.subsistenceSalaryPerCapita * populationCommoners;
             const elitesConsumption = Math.min(1, wealth / wealthThreshold)
-                * params.inequalityFactor * subsistenceSalaryPerCapita * populationElites;
+                * params.inequalityFactor * params.subsistenceSalaryPerCapita * populationElites;
             // TODO: Should show periods of famine on the graph.
-            const deathRateCommoners = normalDeathRate
-                + Math.max(0, 1 - commonersConsumption / (subsistenceSalaryPerCapita * populationCommoners))
-                    * (famineDeathRate - normalDeathRate);
-            const deathRateElites = normalDeathRate
-                + Math.max(0, 1 - elitesConsumption / (subsistenceSalaryPerCapita * populationElites))
-                * (famineDeathRate - normalDeathRate);
+            const deathRateCommoners = params.normalDeathRate
+                + Math.max(0, 1 - commonersConsumption / (params.subsistenceSalaryPerCapita * populationCommoners))
+                    * (params.famineDeathRate - params.normalDeathRate);
+            const deathRateElites = params.normalDeathRate
+                + Math.max(0, 1 - elitesConsumption / (params.subsistenceSalaryPerCapita * populationElites))
+                * (params.famineDeathRate - params.normalDeathRate);
 
             // Update main variables.
             const populationCommonersNext = Math.max(0, populationCommoners + dt * (
@@ -56,7 +46,7 @@ export default class {
             const populationElitesNext = Math.max(0, populationElites + dt * (
                 populationElites * (params.birthRateElites - deathRateElites)));
             const natureNext = Math.max(0, nature + dt * (
-                regenerationFactor * nature * (natureCapacity - nature)
+                params.regenerationFactor * nature * (params.natureCapacity - nature)
                 - params.depletionPerWorker * populationCommoners * nature));
             const wealthNext = Math.max(0, wealth + dt * (
                 params.depletionPerWorker * populationCommoners * nature
@@ -98,7 +88,7 @@ export default class {
         // to speed up rendering.  Ideally we could show a debounce(100ms) outline of the curves while
         // dragging a control, then do a final render on endDrag at full resolution.
         const dataPoints = 300;
-        const skipFilter = (element: any, index: number) => index % (yearsToModel / dataPoints);
+        const skipFilter = (element: any, index: number) => index % (params.yearsToModel / dataPoints);
 
         const endMark = performance.now();
         // console.debug('Simulation ran in', endMark - startMark, 'ms');
