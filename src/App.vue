@@ -13,6 +13,12 @@
   <router-view />
 </template>
 
+<script lang="ts">
+  // FIXME: should be safe to leave out this script block, but to do so crashes the server.
+  import { defineComponent } from 'vue';
+  export default defineComponent({});
+</script>
+
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
