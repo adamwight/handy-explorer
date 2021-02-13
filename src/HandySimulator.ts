@@ -5,6 +5,19 @@ interface NormalizedSeries {
     maximum: number;
 }
 
+export interface SimulationResults {
+    // FIXME: decouple from chart.js structure
+    labels: number[];
+    datasets: Array<{
+        label: string;
+        data: number[];
+        borderColor: string;
+        backgroundColor: string;
+        fill: boolean;
+        pointRadius: number;
+    }>;
+}
+
 export class HandySimulator {
 
     // TODO: Clean up normalization.  Print scale for each line.
@@ -19,7 +32,7 @@ export class HandySimulator {
     }
 
     // TODO: types for parametric deltas and outputs
-    public runSimulation(params: SimulationParameters): Record<string, any> {
+    public runSimulation(params: SimulationParameters): SimulationResults {
         //const startMark = performance.now();
         // TODO: const dataPoints = 100;
         // FIXME: Changing dt makes the model unstable.
@@ -89,12 +102,11 @@ export class HandySimulator {
         // to speed up rendering.  Ideally we could show a debounce(100ms) outline of the curves while
         // dragging a control, then do a final render on endDrag at full resolution.
         const dataPoints = 300;
-        const skipFilter = (element: any, index: number) => index % (params.yearsToModel / dataPoints);
+        const skipFilter = (element: number, index: number) => index % (params.yearsToModel / dataPoints);
 
         //const endMark = performance.now();
         // console.debug('Simulation ran in', endMark - startMark, 'ms');
 
-        // TODO: decouple return format from chart.js
         return {
             // TODO: Only needs a handful of labels to give the scale.
             labels: recordTime.filter(skipFilter),
