@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "EmbeddedSimulation.vue"
+        name: "EmbeddedSimulation"
     }
 </script>
 

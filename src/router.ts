@@ -1,17 +1,13 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Home from './views/DetailedSimulation.vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
+import DetailedSimulation from "@/views/DetailedSimulation.vue";
 
-Vue.use(Router);
-
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+export default createRouter({
+  history: createWebHashHistory(),
   routes: [
     {
-      path: '/',
+      path: '/detail',
       name: 'home',
-      component: Home,
+      component: DetailedSimulation,
     },
     {
       path: '/about',
