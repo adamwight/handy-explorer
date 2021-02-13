@@ -42,10 +42,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import 'vue-slider-component/theme/material.css'
-import { SimulationParameters } from '@/store/SimulationParameters';
+import { SimulationParameters } from "@/store/SimulationParameters";
+import VueSlider from "vue-slider-component";
 
 export default defineComponent({
     name: 'ParameterControls',
+    components: {
+      VueSlider,
+    },
     props: {
       simulationParams: SimulationParameters
     }

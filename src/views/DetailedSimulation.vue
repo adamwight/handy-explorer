@@ -18,8 +18,14 @@
 import { defineComponent } from 'vue'
 import { HandySimulator, SimulationResults } from '@/HandySimulator'
 import { initialParams } from '@/store/SimulationParameters';
+import LineChart from "@/components/LineChart.vue";
+import ParameterControls from "@/components/ParameterControls.vue";
 
 export default defineComponent({
+  components: {
+    LineChart,
+    ParameterControls,
+  },
   data() {
     return {
       simulationParameters: initialParams,
