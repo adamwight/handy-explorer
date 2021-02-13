@@ -6,8 +6,8 @@ export default createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
-      path: '/detail',
-      name: 'home',
+      path: '/',
+      name: 'detail',
       component: DetailedSimulation,
     },
     {
