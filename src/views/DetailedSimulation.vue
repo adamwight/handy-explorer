@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HandySimulator from '@/HandySimulator'
+import { HandySimulator } from '@/HandySimulator'
 import { initialParams } from '@/store/SimulationParameters';
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
     }
   },
   computed: {
-      chartData() {
+      chartData(): object {
           // TODO: Debounce, kill running simulation
           return new HandySimulator()
             .runSimulation(this.simulationParameters);
@@ -35,7 +35,7 @@ export default defineComponent({
   events: {
 
   }
-})
+});
 </script>
 
 <style scoped>

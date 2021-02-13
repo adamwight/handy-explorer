@@ -10,11 +10,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import * as d3 from 'd3';
+//import * as d3 from 'd3';
 
 export default defineComponent({
     name: 'LineChart',
-    props: [ 'chartData', 'options' ],
+    props: {
+      chartData: { type: Object, required: true },
+      options: { type: Object, required: true },
+    },
     data() {
         return {
             // FIXME
@@ -23,12 +26,15 @@ export default defineComponent({
         }
     },
     created() {
+      /*
         const svg = d3
             .select("#chart")
             .append("g");
 
         const xAxis = d3
             .scaleLinear();
+
+       */
         // TODO
             //.domain([0,)
             //.range(this.width)
