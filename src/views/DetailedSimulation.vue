@@ -2,7 +2,7 @@
   <div class="home">
     <div class="controls">
       <ParameterControls
-        :simulation-params="simulationParams"
+        :simulation-parameters="simulationParameters"
       />
     </div>
     <div class="chart">
@@ -16,10 +16,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import ParameterControls from "@/components/ParameterControls.vue";
 import { HandySimulator, SimulationResults } from '@/HandySimulator'
 import { initialParams } from '@/store/SimulationParameters';
 import LineChart from "@/components/LineChart.vue";
-import ParameterControls from "@/components/ParameterControls.vue";
 
 export default defineComponent({
   components: {

@@ -1,59 +1,60 @@
 <template>
   <div class="parameter-controls">
-    <vue-slider
-      v-model="syncedBirthRateCommoners"
+    <Slider
+      :value="simulationParameters.birthRateCommoners"
       :interval="0.001"
       :max="0.1"
       :min="0"
     >
       <p>Commoners birth rate<!-- FIXME: = {{ syncedBirthRateCommoners }} --></p>
-    </vue-slider>
+    </Slider>
     <br>
-    <vue-slider
-      v-model="syncedBirthRateElites"
+    <Slider
+      :value="simulationParameters.birthRateElites"
       :interval="0.001"
       :max="0.1"
       :min="0"
     >
       <p>Elites birth rate</p>
-    </vue-slider>
+    </Slider>
     <br>
     <!-- TODO: slider should be logarithmic. -->
-    <vue-slider
-      v-model="syncedInequalityFactor"
+    <Slider
+      :value="simulationParameters.inequalityFactor"
       :interval="0.25"
       :max="100"
       :min="1"
     >
       <p>Inequality factor</p>
-    </vue-slider>
+    </Slider>
     <br>
-    <vue-slider
-      v-model="syncedDepletionPerWorker"
+    <Slider
+      :value="simulationParameters.depletionPerWorker"
       :interval="0.000001"
       :max=".00005"
       :min="0"
     >
       <p>Depletion per worker</p>
-    </vue-slider>
+    </Slider>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import 'vue-slider-component/theme/material.css'
 import { SimulationParameters } from "@/store/SimulationParameters";
-import VueSlider from "vue-slider-component";
+import Slider from "@vueform/slider";
 
 export default defineComponent({
     name: 'ParameterControls',
     components: {
-      VueSlider,
+      Slider,
     },
     props: {
-      simulationParams: SimulationParameters
-    }
-      // FIXME: simulationParams: { type: SimulationParameters },
+      simulationParameters: {
+        type: Object as () => SimulationParameters,
+        required: true,
+      }
+    },
 })
 </script>
 
