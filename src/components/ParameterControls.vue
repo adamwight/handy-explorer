@@ -1,7 +1,7 @@
 <template>
   <div class="parameter-controls">
     <Slider
-      :value="simulationParameters.birthRateCommoners"
+      :modelValue="simulationParameters.birthRateCommoners"
       :step="0.001"
       :max="0.1"
       :min="0"
@@ -10,7 +10,7 @@
     </Slider>
     <br>
     <Slider
-      :value="simulationParameters.birthRateElites"
+      :modelValue="simulationParameters.birthRateElites"
       :step="0.001"
       :max="0.1"
       :min="0"
@@ -20,7 +20,7 @@
     <br>
     <!-- TODO: slider should be logarithmic. -->
     <Slider
-      :value="simulationParameters.inequalityFactor"
+      :modelValue="simulationParameters.inequalityFactor"
       :step="0.25"
       :max="100"
       :min="1"
@@ -29,7 +29,7 @@
     </Slider>
     <br>
     <Slider
-      :value="simulationParameters.depletionPerWorker"
+      :modelValue="simulationParameters.depletionPerWorker"
       :step="0.000001"
       :max=".00005"
       :min="0"
@@ -42,7 +42,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { SimulationParameters } from "@/store/SimulationParameters";
-import Slider from "@vueform/slider";
+import Slider from "vue3-slider";
 
 export default defineComponent({
     name: 'ParameterControls',

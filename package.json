@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "@types/d3": "^6.3.0",
-    "@vueform/slider": "^1.0.3",
     "babel-loader": "^8.2.2",
     "core-js": "^3.8.3",
     "d3": "^6.5.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.0",
+    "vue3-slider": "^1.2.7",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
