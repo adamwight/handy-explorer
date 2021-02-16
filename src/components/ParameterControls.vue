@@ -1,41 +1,49 @@
 <template>
   <div class="parameter-controls">
     <Slider
-      :modelValue="simulationParameters.birthRateCommoners"
+      :model-value="simulationParameters.birthRateCommoners"
       :step="0.001"
       :max="0.1"
       :min="0"
-    >
-      <p>Commoners birth rate<!-- FIXME: = {{ syncedBirthRateCommoners }} --></p>
-    </Slider>
+      color="#9924f4"
+      track-color="#bc7af4"
+      :tooltip="true"
+    />
+    <p>Commoners birth rate<!-- FIXME: = {{ syncedBirthRateCommoners }} --></p>
     <br>
     <Slider
-      :modelValue="simulationParameters.birthRateElites"
+      :model-value="simulationParameters.birthRateElites"
       :step="0.001"
       :max="0.1"
       :min="0"
-    >
-      <p>Elites birth rate</p>
-    </Slider>
+      color="#2b5bf1"
+      track-color="#a8b9f0"
+      :tooltip="true"
+    />
+    <p>Elites birth rate</p>
     <br>
     <!-- TODO: slider should be logarithmic. -->
     <Slider
-      :modelValue="simulationParameters.inequalityFactor"
+      :model-value="simulationParameters.inequalityFactor"
       :step="0.25"
       :max="100"
       :min="1"
-    >
-      <p>Inequality factor</p>
-    </Slider>
+      color="#decb12"
+      track-color="#f3eec1"
+      :tooltip="true"
+    />
+    <p>Inequality factor</p>
     <br>
     <Slider
-      :modelValue="simulationParameters.depletionPerWorker"
+      :model-value="simulationParameters.depletionPerWorker"
       :step="0.000001"
       :max=".00005"
       :min="0"
-    >
-      <p>Depletion per worker</p>
-    </Slider>
+      color="#8e842a"
+      track-color="#b3ad71"
+      :tooltip="true"
+    />
+    <p>Depletion per worker</p>
   </div>
 </template>
 
