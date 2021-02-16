@@ -2,7 +2,7 @@
   <div class="parameter-controls">
     <Slider
       :value="simulationParameters.birthRateCommoners"
-      :interval="0.001"
+      :step="0.001"
       :max="0.1"
       :min="0"
     >
@@ -11,7 +11,7 @@
     <br>
     <Slider
       :value="simulationParameters.birthRateElites"
-      :interval="0.001"
+      :step="0.001"
       :max="0.1"
       :min="0"
     >
@@ -21,7 +21,7 @@
     <!-- TODO: slider should be logarithmic. -->
     <Slider
       :value="simulationParameters.inequalityFactor"
-      :interval="0.25"
+      :step="0.25"
       :max="100"
       :min="1"
     >
@@ -30,7 +30,7 @@
     <br>
     <Slider
       :value="simulationParameters.depletionPerWorker"
-      :interval="0.000001"
+      :step="0.000001"
       :max=".00005"
       :min="0"
     >
