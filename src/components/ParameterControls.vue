@@ -1,7 +1,7 @@
 <template>
   <div class="parameter-controls">
     <Slider
-      :model-value="simulationParameters.birthRateCommoners"
+      v-model="currentParameters.birthRateCommoners"
       :step="0.001"
       :max="0.1"
       :min="0"
@@ -12,7 +12,7 @@
     <p>Commoners birth rate</p>
     <br>
     <Slider
-      :model-value="simulationParameters.birthRateElites"
+      v-model="currentParameters.birthRateElites"
       :step="0.001"
       :max="0.1"
       :min="0"
@@ -24,7 +24,7 @@
     <br>
     <!-- TODO: slider should be logarithmic. -->
     <Slider
-      :model-value="simulationParameters.inequalityFactor"
+      v-model="currentParameters.inequalityFactor"
       :step="0.25"
       :max="100"
       :min="1"
@@ -35,7 +35,7 @@
     <p>Inequality factor</p>
     <br>
     <Slider
-      :model-value="simulationParameters.depletionPerWorker"
+      v-model="currentParameters.depletionPerWorker"
       :step="0.000001"
       :max=".00005"
       :min="0"
@@ -48,8 +48,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { SimulationParameters } from "@/store/SimulationParameters";
+import {defineComponent, reactive, toRef, watch} from 'vue'
+import {SimulationParameters} from "@/store/SimulationParameters";
 import Slider from "vue3-slider";
 
 export default defineComponent({
@@ -58,11 +58,29 @@ export default defineComponent({
       Slider,
     },
     props: {
-      simulationParameters: {
+      initialParameters: {
         type: Object as () => SimulationParameters,
         required: true,
       }
     },
+    emits: [ "change" ],
+    setup(props, {emit}) {
+      // Any parameter changes cause a full chart refresh.
+      const currentParameters = reactive({...props.initialParameters});
+      watch(
+        [
+          toRef(currentParameters, "birthRateCommoners"),
+          toRef(currentParameters, "birthRateElites"),
+          toRef(currentParameters, "inequalityFactor"),
+          toRef(currentParameters, "depletionPerWorker"),
+        ],
+        () => emit("change", currentParameters)
+      )
+
+      return {
+        currentParameters
+      }
+    }
 })
 </script>
 

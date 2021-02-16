@@ -2,7 +2,8 @@
   <div class="home">
     <div class="controls">
       <ParameterControls
-        :simulation-parameters="simulationParameters"
+        :initial-parameters="simulationParameters"
+        @change="updateParameters"
       />
     </div>
     <div class="chart">
@@ -14,10 +15,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 import ParameterControls from "@/components/ParameterControls.vue";
-import { HandySimulator, SimulationResults } from '@/HandySimulator'
-import { initialParams } from '@/store/SimulationParameters';
+import {HandySimulator} from '@/HandySimulator'
+import {initialParams, SimulationParameters} from '@/store/SimulationParameters';
 import LineChart from "@/components/LineChart.vue";
 
 export default defineComponent({
@@ -25,21 +26,21 @@ export default defineComponent({
     LineChart,
     ParameterControls,
   },
-  data() {
+  setup() {
+    const simulationParameters = ref({...initialParams});
+    const chartData = computed(() => {
+      // TODO: Debounce, kill running simulation
+      return new HandySimulator()
+              .runSimulation(simulationParameters.value);
+    });
+    const updateParameters = function(currentParameters: SimulationParameters) {
+      simulationParameters.value = currentParameters;
+    };
     return {
-      simulationParameters: initialParams,
-      chartOptions: {},
+      chartData,
+      simulationParameters,
+      updateParameters,
     }
-  },
-  computed: {
-      chartData(): SimulationResults {
-          // TODO: Debounce, kill running simulation
-          return new HandySimulator()
-            .runSimulation(this.simulationParameters);
-      }
-  },
-  events: {
-
   }
 });
 </script>
