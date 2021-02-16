@@ -16,7 +16,6 @@ export default defineComponent({
     name: 'LineChart',
     props: {
       chartData: { type: Object, required: true },
-      options: { type: Object, required: true },
     },
     data() {
         return {
