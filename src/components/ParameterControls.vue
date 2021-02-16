@@ -9,7 +9,7 @@
       track-color="#bc7af4"
       :tooltip="true"
     />
-    <p>Commoners birth rate<!-- FIXME: = {{ syncedBirthRateCommoners }} --></p>
+    <p>Commoners birth rate</p>
     <br>
     <Slider
       :model-value="simulationParameters.birthRateElites"
@@ -69,5 +69,15 @@ export default defineComponent({
 <style scoped>
 div {
     margin: 10px auto 10px auto;
+}
+</style>
+
+<style lang="scss">
+.vue3-slider .handle {
+  transform: scale(1.0);
+
+  &.hover {
+     transform: scale(1.2);
+  }
 }
 </style>
