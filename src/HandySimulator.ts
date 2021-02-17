@@ -8,6 +8,7 @@ interface NormalizedSeries {
 export interface SimulationResults {
     // FIXME: decouple from chart.js structure
     labels: number[];
+    maximumPopupation: number;
     datasets: Array<{
         label: string;
         data: number[];
@@ -110,6 +111,7 @@ export class HandySimulator {
         return {
             // TODO: Only needs a handful of labels to give the scale.
             labels: recordTime.filter(skipFilter),
+            maximumPopupation: maxPop,
             datasets: [
                 {
                     label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',
