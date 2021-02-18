@@ -28,14 +28,16 @@ export default defineComponent({
   },
   setup() {
     const simulationParameters = ref({...initialParams});
+    const updateParameters = function(currentParameters: SimulationParameters) {
+      simulationParameters.value = currentParameters;
+    };
+
     const chartData = computed(() => {
       // TODO: Debounce, kill running simulation
       return new HandySimulator()
               .runSimulation(simulationParameters.value);
     });
-    const updateParameters = function(currentParameters: SimulationParameters) {
-      simulationParameters.value = currentParameters;
-    };
+
     return {
       chartData,
       simulationParameters,
