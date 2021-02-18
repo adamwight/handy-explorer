@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, toRef, watch, watchEffect} from 'vue'
+import {defineComponent, onMounted, watchEffect} from 'vue'
 import * as d3 from 'd3';
 import {SimulationResults} from "@/HandySimulator";
 
@@ -59,13 +59,11 @@ export default defineComponent({
 
         const line = d3.line<number>(
           (_, i) => x(i),
-          (v, _) => y(v)
+          v => y(v)
         );
 
         const linePath = svg
-          .append("path")
-          .attr("class", "line")
-          .attr("stroke", (d, i) => charts[i].color);
+          .selectAll("path");
 
         svg.append("g")
           .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -78,7 +76,10 @@ export default defineComponent({
         function updateData(chartData: SimulationResults) {
           const data = chartData.datasets.map(set => set.data);
           linePath
-            .data(data)
+            .data(data, (_, i) => i)
+            .join("path")
+            .attr("class", "line")
+            .attr("stroke", (_, i) => charts[i].color)
             .attr("d", d => line(d));
         }
         watchEffect(() => updateData(props.chartData));
@@ -102,7 +103,6 @@ export default defineComponent({
   }
   .line {
     fill: none;
-    /*stroke: black;*/
     stroke-width: 2px;
   }
 </style>
