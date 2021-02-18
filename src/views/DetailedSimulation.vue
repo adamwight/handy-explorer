@@ -48,11 +48,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-    div.controls {
+    .controls {
         width: 65%;
         margin: 10px auto 10px auto;
     }
-    div.chart {
+    .chart {
         width: 80%;
         margin: 10em auto 10px auto;
     }

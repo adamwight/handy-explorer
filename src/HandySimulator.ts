@@ -12,10 +12,6 @@ export interface SimulationResults {
     datasets: Array<{
         label: string;
         data: number[];
-        borderColor: string;
-        backgroundColor: string;
-        fill: boolean;
-        pointRadius: number;
     }>;
 }
 
@@ -116,34 +112,18 @@ export class HandySimulator {
                 {
                     label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',
                     data: rescaledCommoners.filter(skipFilter),
-                    borderColor: 'rgb(255,0,0)',
-                    backgroundColor: 'rgb(255,0,0)',
-                    fill: false,
-                    pointRadius: 0,
                 },
                 {
                     label: 'Elites population (max ' + Math.round(maximumPopulationElites) + ')',
                     data: rescaledElites.filter(skipFilter),
-                    borderColor: 'rgb(0,0,255)',
-                    backgroundColor: 'rgb(0,0,255)',
-                    fill: false,
-                    pointRadius: 0,
                 },
                 {
                     label: 'Nature',
                     data: normalizedNature.filter(skipFilter),
-                    borderColor: 'rgb(0,255,0)',
-                    backgroundColor: 'rgb(0,255,0)',
-                    fill: false,
-                    pointRadius: 0,
                 },
                 {
                     label: 'Wealth',
                     data: normalizedWealth.filter(skipFilter),
-                    borderColor: 'rgb(255,255,0)',
-                    backgroundColor: 'rgb(255,255,0)',
-                    fill: false,
-                    pointRadius: 0,
                 },
             ],
         };

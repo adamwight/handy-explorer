@@ -7,9 +7,24 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, toRef, watch} from 'vue'
+import {defineComponent, onMounted, toRef, watch, watchEffect} from 'vue'
 import * as d3 from 'd3';
 import {SimulationResults} from "@/HandySimulator";
+
+const charts = [
+  {
+    color: 'red',
+  },
+  {
+    color: 'blue',
+  },
+  {
+    color: 'green',
+  },
+  {
+    color: 'yellow',
+  },
+];
 
 export default defineComponent({
     name: 'LineChart',
@@ -49,7 +64,8 @@ export default defineComponent({
 
         const linePath = svg
           .append("path")
-          .attr("class", "line");
+          .attr("class", "line")
+          .attr("stroke", (d, i) => charts[i].color);
 
         svg.append("g")
           .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -63,11 +79,9 @@ export default defineComponent({
           const data = chartData.datasets.map(set => set.data);
           linePath
             .data(data)
-            .attr("d", line);
+            .attr("d", d => line(d));
         }
-        // FIXME: how to make this initial kick implicit?
-        updateData(props.chartData);
-        watch(toRef(props, "chartData"), (chartData) => updateData(chartData));
+        watchEffect(() => updateData(props.chartData));
       };
 
       onMounted(draw);
@@ -88,7 +102,7 @@ export default defineComponent({
   }
   .line {
     fill: none;
-    stroke: black;
+    /*stroke: black;*/
     stroke-width: 2px;
   }
 </style>
