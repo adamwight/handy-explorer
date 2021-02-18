@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <svg
-      id="chart"
-      :height="height"
-      :width="width"
-    />
-  </div>
+  <svg
+    id="chart"
+    :height="height"
+    :width="width"
+  />
 </template>
 
 <script lang="ts">
@@ -22,48 +20,56 @@ export default defineComponent({
       }
     },
     setup(props) {
+      const margin = ({top: 10, right: 20, bottom: 30, left: 40});
       // FIXME: dynamic size
       const height = 600;
       const width = 1000;
+
       const draw = function() {
-        //console.log(props.chartData);
-        // TODO
         const svg = d3
+          // FIXME: Don't use ID, this breaks multiple graph support.
           .select("#chart")
           .append("g");
 
         const x = d3
           .scaleLinear()
           // TODO: yearsToModel, or dynamic chart data length
-          .domain([0, 600])
-          .range([0, width]);
-        //.range(width)
+          .domain([0, 300])
+          .range([margin.left, width - margin.right]);
         const y = d3
           .scaleLinear()
-          .domain([0, props.chartData.maximumPopupation])
-          .range([0, height]);
+          //.domain([0, props.chartData.maximumPopupation])
+          .domain([0, 1])
+          .range([height - margin.bottom, margin.top]);
 
-        const data1 = props.chartData.datasets[0].data.entries();
-        const line1 = d3
-          .line()
-          .x(v => x(v[0]))
-          .y(v => y(v[1]));
+        const line = d3.line<number>(
+          (_, i) => x(i),
+          (v, _) => y(v)
+        );
 
-        svg
+        const linePath = svg
           .append("path")
-          .datum(data1)
-          .attr("d", line1);
+          .attr("class", "line");
 
         svg.append("g")
-          .attr("transform", "translate(0," + height + ")")
+          .attr("transform", `translate(0,${height - margin.bottom})`)
           .call(d3.axisBottom(x));
 
         svg.append("g")
+          .attr("transform", `translate(${margin.left},0)`)
           .call(d3.axisLeft(y));
+
+        function updateData(chartData: SimulationResults) {
+          const data = chartData.datasets.map(set => set.data);
+          linePath
+            .data(data)
+            .attr("d", line);
+        }
+        // FIXME: how to make this initial kick implicit?
+        updateData(props.chartData);
+        watch(toRef(props, "chartData"), (chartData) => updateData(chartData));
       };
 
-      watch(toRef(props, "chartData"), draw);
-      // FIXME: Shouldn't require the initial kick
       onMounted(draw);
 
       return {
@@ -74,3 +80,15 @@ export default defineComponent({
     },
 })
 </script>
+
+<style lang="scss">
+  #chart {
+    margin: 10px;
+    padding: 10px;
+  }
+  .line {
+    fill: none;
+    stroke: black;
+    stroke-width: 2px;
+  }
+</style>
