@@ -62,8 +62,7 @@ export default defineComponent({
           v => y(v)
         );
 
-        const linePath = svg
-          .selectAll("path");
+        const lineSeries = svg.append("g");
 
         svg.append("g")
           .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -75,9 +74,11 @@ export default defineComponent({
 
         function updateData(chartData: SimulationResults) {
           const data = chartData.datasets.map(set => set.data);
-          linePath
-            .data(data, (_, i) => i)
+          const container = lineSeries
+            .selectAll("path")
+            .data(data)
             .join("path")
+
             .attr("class", "line")
             .attr("stroke", (_, i) => charts[i].color)
             .attr("d", d => line(d));
