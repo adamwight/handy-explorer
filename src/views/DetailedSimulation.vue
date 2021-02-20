@@ -3,7 +3,7 @@
 <template>
   <div class="controls">
     <ParameterControls
-      :initial-parameters="simulationParameters"
+      :initial-parameters="initialParams"
       @change="updateParameters"
     />
   </div>
@@ -36,12 +36,12 @@ export default defineComponent({
     const chartData = computed(() => {
       // TODO: Debounce, kill running simulation
       return new HandySimulator()
-              .runSimulation(simulationParameters.value);
+        .runSimulation(simulationParameters.value);
     });
 
     return {
       chartData,
-      simulationParameters,
+      initialParams,
       updateParameters,
     }
   }

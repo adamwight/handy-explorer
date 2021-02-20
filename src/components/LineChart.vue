@@ -39,7 +39,6 @@ export default defineComponent({
 
       const draw = function() {
         const svg = d3
-          // FIXME: Don't use ID, this breaks multiple graph support.
           .select(".chart-svg")
           .attr("viewBox", `0 0 ${width} ${height}`)
           .append("g");
