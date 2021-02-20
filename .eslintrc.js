@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/recommended',
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/typescript/recommended'
   ],
@@ -12,9 +12,7 @@ module.exports = {
     parser: "@typescript-eslint/parser"
   },
   rules: {
-    'no-console': 'off',
-    'no-debugger': 'off',
-    'vue/no-multiple-template-root': 0,
-    'vue/no-v-for-template-key': 0,
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
   }
 }

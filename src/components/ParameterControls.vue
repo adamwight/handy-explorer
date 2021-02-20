@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, toRef, watch, ref} from 'vue'
+import {defineComponent, reactive, toRef, watch} from 'vue'
 import {SimulationParameters} from "@/store/SimulationParameters";
 import Slider from "vue3-slider";
 
