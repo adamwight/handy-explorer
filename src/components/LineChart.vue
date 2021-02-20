@@ -1,8 +1,6 @@
 <template>
   <svg
     id="chart"
-    :height="height"
-    :width="width"
   />
 </template>
 
@@ -44,6 +42,7 @@ export default defineComponent({
         const svg = d3
           // FIXME: Don't use ID, this breaks multiple graph support.
           .select("#chart")
+          .attr("viewBox", `0 0 ${width} ${height}`)
           .append("g");
 
         const x = d3
@@ -74,7 +73,7 @@ export default defineComponent({
 
         function updateData(chartData: SimulationResults) {
           const data = chartData.datasets.map(set => set.data);
-          const container = lineSeries
+          lineSeries
             .selectAll("path")
             .data(data)
             .join("path")
@@ -90,8 +89,6 @@ export default defineComponent({
 
       return {
         draw,
-        height,
-        width,
       }
     },
 })
