@@ -33,9 +33,9 @@ export default defineComponent({
       }
     },
     setup(props) {
-      const margin = ({top: 10, right: 20, bottom: 30, left: 40});
-      const height = 1000;
-      const width = 1000;
+      const margin = ({top: 5, right: 15, bottom: 25, left: 25});
+      const width = 400;
+      const height = 300;
 
       const draw = function() {
         const svg = d3

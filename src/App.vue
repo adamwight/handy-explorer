@@ -26,6 +26,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+  display: grid;
+}
+
+@media all and (orientation: landscape) {
+  #app {
+    grid-template-areas:
+      'header chart'
+      'controls chart';
+  }
+}
+
+@media all and (orientation: portrait) {
+  #app {
+    grid-template-areas:
+      'header'
+      'controls'
+      'chart';
+  }
 }
 
 #nav {
@@ -37,6 +56,8 @@ body {
       color: #42b983;
     }
   }
+
+  grid-area: header;
 }
 
 @media (min-width: 768px) {

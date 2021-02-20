@@ -1,16 +1,14 @@
 <template>
-  <div class="home">
-    <div class="controls">
-      <ParameterControls
-        :initial-parameters="simulationParameters"
-        @change="updateParameters"
-      />
-    </div>
-    <div class="chart">
-      <LineChart
-        :chart-data="chartData"
-      />
-    </div>
+  <div class="controls">
+    <ParameterControls
+      :initial-parameters="simulationParameters"
+      @change="updateParameters"
+    />
+  </div>
+  <div class="chart">
+    <LineChart
+      :chart-data="chartData"
+    />
   </div>
 </template>
 
@@ -48,10 +46,6 @@ export default defineComponent({
 </script>
 
 <style>
-  .home {
-    display: grid;
-  }
-
   @media (min-width: 768px) {
     /* Target devices wider than 768px. */
     .chart {
@@ -63,16 +57,11 @@ export default defineComponent({
     /* Target devices narrower than 768px. */
   }
 
-  @media all and (orientation: landscape) {
-    .home {
-      grid-template-columns: 1fr 2fr;
-      grid-auto-rows: minmax(auto, 100vh);
-    }
+  .controls {
+    grid-area: controls;
   }
 
-  @media all and (orientation: portrait) {
-    .home {
-      grid-template-rows: 1fr 2fr;
-    }
+  .chart {
+    grid-area: chart;
   }
 </style>
