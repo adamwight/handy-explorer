@@ -47,13 +47,27 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-    .controls {
+<style>
+  #chart {
+    width: 80%;
+  }
+
+  @media (min-width: 768px) {
+      /* Target devices wider than 768px. */
+      .controls {
         width: 65%;
-        margin: 10px auto 10px auto;
+        margin: 10px auto;
+      }
+
+      #chart {
+        margin: 10px auto;
+      }
     }
-    .chart {
-        width: 80%;
-        margin: 10em auto 10px auto;
+
+    @media (max-width: 767px) {
+      /* Target devices narrower than 768px. */
+      .controls {
+        margin: auto 10px;
+      }
     }
 </style>

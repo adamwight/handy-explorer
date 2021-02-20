@@ -101,6 +101,7 @@ export default defineComponent({
   #chart {
     margin: 10px;
     padding: 10px;
+    max-width: 100%;
   }
   .line {
     fill: none;

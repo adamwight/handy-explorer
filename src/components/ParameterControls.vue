@@ -1,5 +1,6 @@
 <template>
   <div class="parameter-controls">
+    <br />Commoners birth rate
     <Slider
       v-model="currentParameters.birthRateCommoners"
       :step="0.001"
@@ -9,8 +10,7 @@
       track-color="#bc7af4"
       :tooltip="true"
     />
-    <p>Commoners birth rate</p>
-    <br>
+    <br />Elites birth rate
     <Slider
       v-model="currentParameters.birthRateElites"
       :step="0.001"
@@ -20,9 +20,8 @@
       track-color="#a8b9f0"
       :tooltip="true"
     />
-    <p>Elites birth rate</p>
-    <br>
     <!-- TODO: slider should be logarithmic. -->
+    <br />Inequality factor
     <Slider
       v-model="currentParameters.inequalityFactor"
       :step="0.25"
@@ -32,8 +31,7 @@
       track-color="#f3eec1"
       :tooltip="true"
     />
-    <p>Inequality factor</p>
-    <br>
+    <br />Depletion per worker
     <Slider
       v-model="currentParameters.depletionPerWorker"
       :step="0.000001"
@@ -43,7 +41,6 @@
       track-color="#b3ad71"
       :tooltip="true"
     />
-    <p>Depletion per worker</p>
   </div>
 </template>
 
@@ -83,12 +80,6 @@ export default defineComponent({
     }
 })
 </script>
-
-<style scoped>
-div {
-    margin: 10px auto 10px auto;
-}
-</style>
 
 <style lang="scss">
 .vue3-slider .handle {

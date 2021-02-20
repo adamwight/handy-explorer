@@ -26,8 +26,6 @@
 }
 
 #nav {
-  padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -36,5 +34,16 @@
       color: #42b983;
     }
   }
+}
+
+@media (min-width: 768px) {
+  /* Target devices wider than 768px. */
+  #nav {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Target devices narrower than 768px. */
 }
 </style>
