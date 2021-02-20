@@ -103,5 +103,7 @@ export default defineComponent({
   .line {
     fill: none;
     stroke-width: 2px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
   }
 </style>
