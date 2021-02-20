@@ -70,10 +70,9 @@ export default defineComponent({
           .call(d3.axisLeft(y));
 
         function updateData(chartData: SimulationResults) {
-          const data = chartData.datasets.map(set => set.data);
           lineSeries
             .selectAll("path")
-            .data(data)
+            .data(chartData.datasets)
             .join("path")
 
             .attr("class", "line")

@@ -6,13 +6,7 @@ interface NormalizedSeries {
 }
 
 export interface SimulationResults {
-    // FIXME: decouple from chart.js structure
-    labels: number[];
-    maximumPopupation: number;
-    datasets: Array<{
-        label: string;
-        data: number[];
-    }>;
+    datasets: Array<number[]>;
 }
 
 export class HandySimulator {
@@ -105,26 +99,11 @@ export class HandySimulator {
         // console.debug('Simulation ran in', endMark - startMark, 'ms');
 
         return {
-            // TODO: Only needs a handful of labels to give the scale.
-            labels: recordTime.filter(skipFilter),
-            maximumPopupation: maxPop,
             datasets: [
-                {
-                    label: 'Commoners population (max ' + Math.round(maximumPopulationCommoners) + ')',
-                    data: rescaledCommoners.filter(skipFilter),
-                },
-                {
-                    label: 'Elites population (max ' + Math.round(maximumPopulationElites) + ')',
-                    data: rescaledElites.filter(skipFilter),
-                },
-                {
-                    label: 'Nature',
-                    data: normalizedNature.filter(skipFilter),
-                },
-                {
-                    label: 'Wealth',
-                    data: normalizedWealth.filter(skipFilter),
-                },
+                rescaledCommoners.filter(skipFilter),
+                rescaledElites.filter(skipFilter),
+                normalizedNature.filter(skipFilter),
+                normalizedWealth.filter(skipFilter),
             ],
         };
     }
