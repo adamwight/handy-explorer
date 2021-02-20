@@ -33,9 +33,9 @@ body {
 @media all and (orientation: landscape) {
   #app {
     grid-template-areas:
-      'header chart'
-      'controls chart'
-      'controls chart';
+      'header chart chart'
+      'controls chart chart'
+      'controls chart chart';
   }
 }
 

@@ -1,3 +1,5 @@
+<!-- page container focusing on a single simulation -->
+
 <template>
   <div class="controls">
     <ParameterControls
@@ -25,6 +27,7 @@ export default defineComponent({
     ParameterControls,
   },
   setup() {
+    // Copy initial parameters.
     const simulationParameters = ref({...initialParams});
     const updateParameters = function(currentParameters: SimulationParameters) {
       simulationParameters.value = currentParameters;
