@@ -48,26 +48,31 @@ export default defineComponent({
 </script>
 
 <style>
-  #chart {
-    width: 80%;
+  .home {
+    display: grid;
   }
 
   @media (min-width: 768px) {
-      /* Target devices wider than 768px. */
-      .controls {
-        width: 65%;
-        margin: 10px auto;
-      }
-
-      #chart {
-        margin: 10px auto;
-      }
+    /* Target devices wider than 768px. */
+    .chart {
+      margin: 10px auto;
     }
+  }
 
-    @media (max-width: 767px) {
-      /* Target devices narrower than 768px. */
-      .controls {
-        margin: auto 10px;
-      }
+  @media (max-width: 767px) {
+    /* Target devices narrower than 768px. */
+  }
+
+  @media all and (orientation: landscape) {
+    .home {
+      grid-template-columns: 1fr 2fr;
+      grid-auto-rows: minmax(auto, 100vh);
     }
+  }
+
+  @media all and (orientation: portrait) {
+    .home {
+      grid-template-rows: 1fr 2fr;
+    }
+  }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <svg
-    id="chart"
+    class="chart-svg"
   />
 </template>
 
@@ -34,14 +34,13 @@ export default defineComponent({
     },
     setup(props) {
       const margin = ({top: 10, right: 20, bottom: 30, left: 40});
-      // FIXME: dynamic size
-      const height = 600;
+      const height = 1000;
       const width = 1000;
 
       const draw = function() {
         const svg = d3
           // FIXME: Don't use ID, this breaks multiple graph support.
-          .select("#chart")
+          .select(".chart-svg")
           .attr("viewBox", `0 0 ${width} ${height}`)
           .append("g");
 
@@ -95,11 +94,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  #chart {
+  .chart-svg {
     margin: 10px;
     padding: 10px;
-    max-width: 100%;
+    max-height: 100%;
   }
+
   .line {
     fill: none;
     stroke-width: 2px;
