@@ -34,6 +34,7 @@ body {
   #app {
     grid-template-areas:
       'header chart'
+      'controls chart'
       'controls chart';
   }
 }
