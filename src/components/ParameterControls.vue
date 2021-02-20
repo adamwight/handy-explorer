@@ -1,62 +1,35 @@
 <template>
-  <div class="parameter-controls">
-    <br />Commoners birth rate
+  <template
+    v-for="control in controls"
+    :key="control.id"
+  >
+    <br>{{ control.title }}
     <Slider
-      v-model="currentParameters.birthRateCommoners"
-      :step="0.001"
-      :max="0.1"
-      :min="0"
-      color="#9924f4"
-      track-color="#bc7af4"
+      v-model="control.value"
+      :step="control.step"
+      :min="control.min"
+      :max="control.max"
+      :color="control.onColor"
+      :track-color="control.offColor"
+      tooltip-color="#999"
       :tooltip="true"
     />
-    <br />Elites birth rate
-    <Slider
-      v-model="currentParameters.birthRateElites"
-      :step="0.001"
-      :max="0.1"
-      :min="0"
-      color="#2b5bf1"
-      track-color="#a8b9f0"
-      :tooltip="true"
-    />
-    <!-- TODO: slider should be logarithmic. -->
-    <br />Inequality factor
-    <Slider
-      v-model="currentParameters.inequalityFactor"
-      :step="0.25"
-      :max="100"
-      :min="1"
-      color="#decb12"
-      track-color="#f3eec1"
-      :tooltip="true"
-    />
-    <br />Depletion per worker
-    <Slider
-      v-model="currentParameters.depletionPerWorker"
-      :step="0.000001"
-      :max=".00005"
-      :min="0"
-      color="#8e842a"
-      track-color="#b3ad71"
-      :tooltip="true"
-    />
-  </div>
+  </template>
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, toRef, watch} from 'vue'
+import {defineComponent, reactive, toRef, watch, ref} from 'vue'
 import {SimulationParameters} from "@/store/SimulationParameters";
 import Slider from "vue3-slider";
 
 export default defineComponent({
-    name: 'ParameterControls',
-    components: {
-      Slider,
-    },
-    props: {
-      initialParameters: {
-        type: Object as () => SimulationParameters,
+  name: 'ParameterControls',
+  components: {
+    Slider,
+  },
+  props: {
+    initialParameters: {
+      type: Object as () => SimulationParameters,
         required: true,
       }
     },
@@ -74,8 +47,52 @@ export default defineComponent({
         () => emit("change", currentParameters)
       )
 
+      const controls = [
+        {
+          title: "Workers birth rate",
+          id: 'workers-birth',
+          value: toRef(currentParameters, 'birthRateCommoners'),
+          step: 0.001,
+          min: 0,
+          max: 0.1,
+          onColor: "#9924f4",
+          offColor: "#bc7af4",
+        },
+        {
+          title: "Elites birth rate",
+          id: 'elites-birth',
+          value: toRef(currentParameters, 'birthRateElites'),
+          step: 0.001,
+          min: 0,
+          max: 0.1,
+          onColor: "#2b5bf1",
+          offColor: "#a8b9f0",
+        },
+        {
+          // TODO: slider should be logarithmic.
+          title: "Inequality factor",
+          id: 'inequality',
+          value: toRef(currentParameters, 'inequalityFactor'),
+          step: 0.25,
+          min: 1,
+          max: 100,
+          onColor: "#decb12",
+          offColor: "#f3eec1",
+        },
+        {
+          title: "Depletion per worker",
+          id: 'depletion',
+          value: toRef(currentParameters, 'depletionPerWorker'),
+          step: 0.000001,
+          min: 0,
+          max: 0.0005,
+          onColor: "#8e842a",
+          offColor: "#b3ad71",
+        },
+      ];
+
       return {
-        currentParameters
+        controls,
       }
     }
 })
