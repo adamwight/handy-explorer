@@ -41,6 +41,7 @@ body {
       'header chart chart'
       'controls chart chart'
       'controls chart chart';
+    grid-auto-columns: 33.3%;
   }
 }
 
@@ -50,6 +51,7 @@ body {
       'header'
       'controls'
       'chart';
+    row-gap: 2em;
   }
 }
 

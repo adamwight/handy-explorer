@@ -52,7 +52,7 @@ export default defineComponent({
   @media (min-width: 768px) {
     /* Target devices wider than 768px. */
     .chart {
-      margin: 10px auto;
+      margin: 2vw 2vh;
     }
   }
 

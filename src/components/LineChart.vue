@@ -93,8 +93,6 @@ export default defineComponent({
 
 <style lang="scss">
   .chart-svg {
-    margin: 10px;
-    padding: 10px;
     max-height: 100%;
   }
 
