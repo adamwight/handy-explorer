@@ -11,6 +11,17 @@
   <router-view />
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+import LocaleChanger from './components/LocaleChanger.vue';
+
+export default defineComponent({
+  components: {
+    LocaleChanger,
+  },
+});
+</script>
+
 <style lang="scss">
 body {
   height: 100vh;
