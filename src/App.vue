@@ -1,11 +1,12 @@
 <template>
   <div id="nav">
     <router-link to="/">
-      Detailed simulation
+      {{ $t("detailPage") }}
     </router-link> |
     <router-link to="/about">
-      About
+      {{ $t("about") }}
     </router-link>
+    <locale-changer />
   </div>
   <router-view />
 </template>

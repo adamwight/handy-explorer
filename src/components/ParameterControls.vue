@@ -3,7 +3,7 @@
     v-for="control in controls"
     :key="control.key"
   >
-    <br>{{ control.title }}
+    <br>{{ $t(control.key) }}
     <Slider
       v-model="currentParameters[control.key]"
       :step="control.step"
@@ -25,7 +25,6 @@ import Slider from "vue3-slider";
 
 const controls = [
   {
-    title: "Workers birth rate",
     key: 'birthRateCommoners',
     step: 0.001,
     min: 0,
@@ -34,7 +33,6 @@ const controls = [
     offColor: "#bc7af4",
   },
   {
-    title: "Elites birth rate",
     key: 'birthRateElites',
     step: 0.001,
     min: 0,
@@ -44,7 +42,6 @@ const controls = [
   },
   {
     // TODO: slider should be logarithmic.
-    title: "Inequality factor",
     key: 'inequalityFactor',
     step: 0.25,
     min: 1,
@@ -53,7 +50,6 @@ const controls = [
     offColor: "#f3eec1",
   },
   {
-    title: "Depletion per worker",
     key: 'depletionPerWorker',
     step: 0.000001,
     min: 0,
